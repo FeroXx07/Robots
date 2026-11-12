@@ -10,6 +10,8 @@ public abstract class Robot {
     private final int yearRegisterCompetition;
 
     public Robot(String name, String manufacturer, int yearManufactur, int yearRegistration) {
+        validateNotBlank(name);
+        validateNotBlank(manufacturer);
         this.name = name;
         this.manufacturer = manufacturer;
         this.yearManufactur = yearManufactur;
@@ -33,6 +35,12 @@ public abstract class Robot {
     }
 
     public abstract String getTechnicalDescription();
+
+    private void validateNotBlank(String str) {
+        if (str == null || str.isBlank()){
+            throw new IllegalArgumentException();
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {

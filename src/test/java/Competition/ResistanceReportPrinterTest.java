@@ -9,9 +9,13 @@ import Robots.Robot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ResistanceReportPrinterTest {
 
@@ -45,6 +49,19 @@ class ResistanceReportPrinterTest {
 
     @Test
     void shouldPrintReport() {
-        resistanceReportPrinter.printReport(resistanceCompetition.evaluateRobots(robotList));
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+
+        try {
+            System.setOut(new PrintStream(output));
+
+            resistanceReportPrinter.printReport(resistanceCompetition.evaluateRobots(robotList));
+
+            assertThat(output.toString()).containsSubsequence("Apto para la competición.");
+            assertThat(output.toString()).containsSubsequence("No cumple los requisitos.");
+        }
+        finally {
+            System.setOut(originalOut);
+        }
     }
 }

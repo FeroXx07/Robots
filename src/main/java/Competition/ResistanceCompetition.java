@@ -6,6 +6,7 @@ import Robots.Land.Traction;
 import Robots.ResistanceEvaluable;
 import Robots.ResistanceReport;
 import Robots.Robot;
+import Robots.Utility;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ResistanceCompetition {
     }
 
     public List<ResistanceEvaluable> evaluateRobots(List<Robot> robots) {
-        List<ResistanceEvaluable> evaluableList = getEvaluableRobots(robots);
+        List<ResistanceEvaluable> evaluableList = Utility.getEvaluableRobots(robots);
 
         for (ResistanceEvaluable ev : evaluableList) {
             if (ev instanceof LandRobot) evaluateLandRobot((LandRobot) ev);
@@ -66,11 +67,4 @@ public class ResistanceCompetition {
         robot.setResistanceReport(new ResistanceReport(true, suitable, sb.toString()));
     }
 
-    private List<ResistanceEvaluable> getEvaluableRobots(List<Robot> robots) {
-        return robots
-                .stream()
-                .filter(ResistanceEvaluable.class::isInstance)
-                .map(ResistanceEvaluable.class::cast)
-                .toList();
-    }
 }
