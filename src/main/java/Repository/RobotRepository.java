@@ -38,6 +38,13 @@ public class RobotRepository {
                 .toList();
     }
 
+    public List<String> getAllDescriptions() {
+        return this.robots
+                .stream()
+                .map(Robot::getTechnicalDescription)
+                .toList();
+    }
+
     private <T extends Robot> List<T> getRobotsByType(Class<T> tClass) {
         return robots
                 .stream()
